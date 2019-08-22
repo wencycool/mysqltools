@@ -12,14 +12,14 @@ import (
 var db_mysql *gorm.DB
 var db_sqlite3 *gorm.DB
 
-func init()  {
+func init() {
 	var err error
-	db_mysql,err = gorm.Open("mysql","root:root@tcp(192.168.40.200:3306)/mysql?charset=utf8&loc=Asia%2FShanghai&parseTime=true")
+	db_mysql, err = gorm.Open("mysql", "root:root@tcp(192.168.40.200:3306)/mysql?charset=utf8&loc=Asia%2FShanghai&parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
 	db_mysql.DB().SetMaxOpenConns(10)
-	db_sqlite3,err = gorm.Open("sqlite3","test.db")
+	db_sqlite3, err = gorm.Open("sqlite3", "test.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,13 +34,8 @@ func TestGetSlaveStatus(t *testing.T) {
 }
 
 func TestCreateTables(t *testing.T) {
-	var tablist = []interface{}{&ProcesslistTGT{},&InnodbTrxTGT{},&InnodbLocksTGT{},&InnodbLockWaitsTGT{},&InnodbStatusTGT{},
-		&GlobalVariablesTGT{},&GlobalStatusTGT{},&SlaveStatusTGT{},
+	var tablist = []interface{}{&ProcesslistTGT{}, &InnodbTrxTGT{}, &InnodbLocksTGT{}, &InnodbLockWaitsTGT{}, &InnodbStatusTGT{},
+		&GlobalVariablesTGT{}, &GlobalStatusTGT{}, &SlaveStatusTGT{},
 	}
-	CreateTables(tablist,db_sqlite3)
-}
-
-func TestInsertData(t *testing.T) {
-	InsertData([]interface{}{Processlist{},},db_mysql,db_sqlite3)
-
+	CreateTables(tablist, db_sqlite3)
 }
